@@ -33,8 +33,8 @@ library(lubridate)
 options(tigris_use_cache = TRUE)
 
 # Note: Modify file paths below to match your directory structure
-data_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_concentrated-disadvantage-index/R Code/Data"
-output_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_concentrated-disadvantage-index"
+data_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Data"
+output_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability"
 
 #-------------------------------------------------------------------------------
 # 1. LOAD AND PREPARE BASE GEOGRAPHIC DATA
@@ -83,7 +83,7 @@ cities <- tigris::places(state = NULL, cb = TRUE) %>%
 #-------------------------------------------------------------------------------
 
 # Load American Violence Project fatal shooting data (2019-2023)
-avp1 <- readRDS("C:/Users/User/OneDrive/Github Desktop/replication-code_concentrated-disadvantage-index/R Code/Data/fatal_shootings_2019-2023.RDS")
+avp1 <- readRDS("C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Data/fatal_shootings_2019-2023.RDS")
 
 #-------------------------------------------------------------------------------
 # 3. SPATIAL JOINS AND FILTERING
@@ -305,7 +305,7 @@ ggsave(
 #-------------------------------------------------------------------------------
 
 # Load previously calculated CDI from ACS data
-condis <- readRDS("C:/Users/User/OneDrive/Github Desktop/replication-code_concentrated-disadvantage-index/R Code/Data/(created) concentrated disadvantage items.RDS")
+condis <- readRDS("C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Data/(created) concentrated disadvantage items.RDS")
 
 # Merge CDI with existing data
 finaldata2 <- finaldata1 %>% 
@@ -677,7 +677,7 @@ finaldata3_clean <- finaldata3 %>%
 # Save as RDS (preserves spatial object)
 saveRDS(
   finaldata3_clean, 
-  file.path(data_dir, "final cleaned data.RDS")
+  file.path(data_dir, "(created) finaldata.RDS")
 )
 
 # Save as CSV (drops geometry)
@@ -687,19 +687,10 @@ finaldata3_csv <- finaldata3 %>%
 
 write.csv(
   finaldata3_csv, 
-  file.path(data_dir, "final cleaned data.csv"), 
+  file.path(data_dir, "(created) finaldata.csv"), 
   na = "", 
   row.names = FALSE
 )
-
-# Print completion summary
-cat("\n=== REPLICATION COMPLETE ===\n")
-cat("Output files created:\n")
-cat("1. RDS file (with geometry):", file.path(data_dir, "AVP_cleaned_HL_260216.RDS"), "\n")
-cat("2. CSV file (without geometry):", file.path(data_dir, "AVP_cleaned_HL_260216.csv"), "\n")
-cat("\nDataset dimensions:\n")
-cat("Rows:", nrow(finaldata3_clean), "\n")
-cat("Columns:", ncol(finaldata3_clean), "\n")
 
 #===============================================================================
 # END OF SCRIPT

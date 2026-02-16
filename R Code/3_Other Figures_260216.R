@@ -24,8 +24,8 @@ library(corrplot)
 library(htmlwidgets)
 
 # Set file paths (modify as needed)
-data_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_concentrated-disadvantage-index/R Code/Data"
-figure_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_concentrated-disadvantage-index/R Code/Figure"
+data_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Data"
+figure_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Figure"
 
 # Create figure directory if it doesn't exist
 if (!dir.exists(figure_dir)) {
@@ -37,7 +37,7 @@ if (!dir.exists(figure_dir)) {
 #-------------------------------------------------------------------------------
 
 # Load data with SVI and CDI variables
-figdata <- readRDS(file.path(data_dir, "AVP_SF_HL_251102.RDS"))
+figdata <- readRDS(file.path(data_dir, "(created) finaldata.RDS"))
 
 # Select and rename variables for correlation analysis
 figdata_corr <- figdata %>% 
@@ -125,7 +125,7 @@ cat("Correlation plot (sub-items) saved to:",
 #-------------------------------------------------------------------------------
 
 # Load data with multi-level CDI scores
-figdata2 <- readRDS(file.path(data_dir, "AVP_cleaned_HL_260216.RDS"))
+figdata2 <- readRDS(file.path(data_dir, "(created) finaldata.RDS"))
 
 # Select composite indices only
 figdata_corr2 <- figdata2 %>% 
