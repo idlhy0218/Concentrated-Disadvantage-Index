@@ -1,0 +1,239 @@
+---
+title: "Concentrated Disadvantage Index (tract)"
+format: html
+date: Nov 2nd, 2025
+creator: Heeyoung
+---
+
+
+```{r}
+rm(list = ls())
+getwd()
+setwd("E:/1. Data/ACS/Concentrated Disadvantage Index")
+library(censusapi)
+library(tidycensus)
+library(tidyverse)
+library(magrittr)
+library(readxl)
+```
+
+```{r}
+census_api_key("a8f3c16456333d1a2f2df056b992cffeaab717b8"
+               , install = TRUE
+               , overwrite=TRUE)
+Sys.getenv("CENSUS_API_KEY") #check my api key number
+```
+## 1. Below High School Diploma
+```{r}
+years <- 2020
+names(years) <- years
+state <- state.abb
+di_educ <- map_dfr(years, ~{
+  get_acs(
+    state = state,
+    geography = "tract",
+    variables = c(
+      # Population age 25 or above
+      po_tot_25plus = "B06009_001",
+      # Less than HS
+      po_educ_lh = "B06009_002",
+      # HS
+      po_educ_hc = "B06009_003"
+    ),
+    survey = "acs5",
+    year = .x
+  )
+}, .id = "year")
+
+di_educ %<>%
+  group_by(GEOID, year) %>%
+  reframe(
+    po_tot_25plus = sum(estimate[variable %in% c(
+      "po_tot_25plus"
+    )], na.rm = TRUE),
+    hs_or_lower = sum(estimate[variable %in% c(
+      "po_educ_lh", "po_educ_hc"
+    )], na.rm = TRUE),
+    # Calculate proportions
+    pr_hs_or_low = hs_or_lower / po_tot_25plus,
+  ) %>%
+  ungroup() %>%
+  rename(tract_fips = GEOID) %>%
+  select(tract_fips, year, pr_hs_or_low)
+
+print(di_educ)
+```
+
+## 2. Female Household
+```{r}
+di_fehh <- map_dfr(years, ~{
+  get_acs(
+    geography = "tract",
+    state = state,
+    variables = c(
+      # Total households
+      total_hh = "B11001_001",
+      # Female householder, no spouse present
+      female_hh = "B11001_006"           
+    ),
+    survey = "acs5",
+    year = .x
+  )
+}, .id = "year")
+
+di_fehh %<>%
+  pivot_wider(
+    id_cols = c(GEOID, year),
+    names_from = variable,
+    values_from = estimate
+  ) %>%
+  mutate(
+    pr_female_hh = female_hh / total_hh
+  ) %>%
+  rename(tract_fips = GEOID) %>%
+  select(tract_fips, year, pr_female_hh)
+
+di_fehh
+```
+
+# 3. Poverty Individuals
+```{r}
+di_pov <- map_dfr(years, ~{
+  get_acs(
+    geography = "tract",
+    state = state,
+    variables = c(
+      # Under .50
+      n1 = "C17002_002", 
+      # .50 to .99
+      n2 = "C17002_003",
+      # Population
+      pop = "C17002_001"
+    ),
+    survey = "acs5",
+    year = .x
+  )
+}, .id = "year")
+
+di_pov %<>%
+  group_by(GEOID, year) %>%
+  reframe(
+    pr_pov = sum(estimate[variable %in% c("n1", "n2")], na.rm = TRUE) / sum(estimate[variable %in% c("pop")], na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  rename(tract_fips = GEOID) %>%
+  select(tract_fips, year, pr_pov)
+di_pov
+```
+
+# 4. Public Assistance Income
+```{r}
+di_pubassi <- map_dfr(years, ~{
+  get_acs(
+    geography = "tract",
+    state = state,
+    variables = c(
+      # Total households
+      total_hh = "B19057_001",       
+      # With public assistance income
+      public_assistance = "B19057_002" 
+    ),
+    survey = "acs5",
+    year = .x
+  )
+}, .id = "year")
+
+di_pubassi %<>%
+  pivot_wider(
+    id_cols = c(GEOID, year),
+    names_from = variable,
+    values_from = estimate
+  ) %>%
+  mutate(
+    pr_pubassi = public_assistance / total_hh
+  ) %>%
+  rename(tract_fips = GEOID) %>%
+  select(tract_fips, year, pr_pubassi)
+
+di_pubassi
+```
+
+# 5. Unemployment
+```{r}
+di_unemp <- map_dfr(years, ~{
+  get_acs(
+    geography = "tract",
+    state = state,
+    variables = c(
+      # Total population 16 years and over
+      total_pop = "B23001_001",
+      # Unemployed
+      unemployed = "B23025_005"
+    ),
+    survey = "acs5",
+    year = .x
+  )
+}, .id = "year")
+
+di_unemp %<>%
+  pivot_wider(
+    id_cols = c(GEOID, year),
+    names_from = variable,
+    values_from = estimate
+  ) %>%
+  mutate(
+    pr_unemprate = unemployed / total_pop
+  ) %>%
+  rename(tract_fips = GEOID) %>%
+  select(tract_fips, year, pr_unemprate)
+
+di_unemp
+```
+
+# Merge
+```{r}
+con_disad <- di_educ %>%
+  left_join(di_fehh, by = c("year","tract_fips")) %>%
+  left_join(di_pov, by = c("year","tract_fips")) %>%
+  left_join(di_pubassi, by = c("year","tract_fips")) %>%
+  left_join(di_unemp, by = c("year","tract_fips"))
+
+# Convert FIPS code to numeric
+con_disad %<>% mutate(tract_fips = as.numeric(tract_fips),
+                      year = as.numeric(year))
+
+# convert Nan, Inf -> NA
+con_disad <- con_disad %>%
+  mutate(across(everything(), ~replace(., is.nan(.) | is.infinite(.), NA)))
+
+con_disad
+```
+
+### Scale
+```{r}
+names(con_disad)
+con_disad2 <- con_disad %>%
+mutate(
+        pr_std_hs_or_low = (pr_hs_or_low - mean(pr_hs_or_low, na.rm = TRUE)) / sd(pr_hs_or_low, na.rm = TRUE),
+        pr_std_female_hh = (pr_female_hh - mean(pr_female_hh, na.rm = TRUE)) / sd(pr_female_hh, na.rm = TRUE),
+        pr_std_pov = (pr_pov - mean(pr_pov, na.rm = TRUE)) / sd(pr_pov, na.rm = TRUE),
+        pr_std_pubassi = (pr_pubassi - mean(pr_pubassi, na.rm = TRUE)) / sd(pr_pubassi, na.rm = TRUE),
+        pr_std_unemprate = (pr_unemprate - mean(pr_unemprate, na.rm = TRUE)) / sd(pr_unemprate, na.rm = TRUE)
+    )
+
+con_disad2
+```
+
+### Correlation
+
+```{r}
+con_disad_cor <- con_disad2 %>% select(-c(tract_fips, year))
+library(corrplot)
+corrplot(cor(con_disad_cor, use = "pairwise.complete.obs"), method = "ellipse", sig.level = 0.1, insig = "blank", addCoef.col = 'black', tl.col = "black", addrect = 2, number.cex = 0.8)
+```
+
+
+### Extract
+```{r}
+saveRDS(con_disad2, "E:/1. Data/ACS/Concentrated Disadvantage Index/disadvantage (tract)_251102.RDS")
+```
