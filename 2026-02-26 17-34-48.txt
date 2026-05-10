@@ -1,6 +1,0 @@
-PS C:\Users\User\AppData\Local\Programs\Microsoft VS Code> & C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\python.exe "c:/Users/User/OneDrive/Github Desktop/Pubmed_Bot/journal_crawler_ver2.py"
-Traceback (most recent call last):
-  File "c:\Users\User\OneDrive\Github Desktop\Pubmed_Bot\journal_crawler_ver2.py", line 10, in <module>
-    from google import genai  # [업데이트] 최신 google-genai 라이브러리
-    ^^^^^^^^^^^^^^^^^^^^^^^^
-ImportError: cannot import name 'genai' from 'google' (unknown location)
