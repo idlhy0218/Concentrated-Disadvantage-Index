@@ -33,8 +33,8 @@ library(lubridate)
 options(tigris_use_cache = TRUE)
 
 # Note: Modify file paths below to match your directory structure
-data_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Data"
-output_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability"
+data_dir <- "C:/Users/User/OneDrive/Github Desktop/Concentrated-Disadvantage-Index/Data"
+output_dir <- "C:/Users/User/OneDrive/Github Desktop/Concentrated-Disadvantage-Index"
 
 #-------------------------------------------------------------------------------
 # 1. LOAD AND PREPARE BASE GEOGRAPHIC DATA
@@ -83,7 +83,7 @@ cities <- tigris::places(state = NULL, cb = TRUE) %>%
 #-------------------------------------------------------------------------------
 
 # Load American Violence Project fatal shooting data (2019-2023)
-avp1 <- readRDS("C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Data/fatal_shootings_2019-2023.RDS")
+avp1 <- readRDS("C:/Users/User/OneDrive/Github Desktop/Concentrated-Disadvantage-Index/Data/fatal_shootings_2019-2023.RDS")
 
 #-------------------------------------------------------------------------------
 # 3. SPATIAL JOINS AND FILTERING
@@ -384,7 +384,7 @@ ggsave(
 #-------------------------------------------------------------------------------
 
 # Load previously calculated CDI from ACS data
-condis <- readRDS("C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Data/(created) concentrated disadvantage items.RDS")
+condis <- readRDS("C:/Users/User/OneDrive/Github Desktop/Concentrated-Disadvantage-Index/Data/(created) concentrated disadvantage items.RDS")
 
 # Merge CDI with existing data
 finaldata2 <- finaldata1 %>% 
@@ -400,10 +400,9 @@ finaldata2 <- finaldata1 %>%
 # CDI VARIABLES: THREE VERSIONS
 #-------------------------------------------------------------------------------
 
-cdi_v1 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate")
-cdi_v2 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate", "pr_hs_or_low")
-cdi_v3 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate", "pr_hs_or_low", "pr_std_income")
-
+cdi_v1 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate")
+cdi_v2 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate", "pr_std_hs_or_low")
+cdi_v3 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate", "pr_std_hs_or_low", "pr_std_income") # pr_std_income is reverse-coded median income
 cdi_versions <- list(v1 = cdi_v1, v2 = cdi_v2, v3 = cdi_v3)
 
 #-------------------------------------------------------------------------------

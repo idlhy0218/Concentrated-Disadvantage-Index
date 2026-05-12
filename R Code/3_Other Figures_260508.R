@@ -24,8 +24,8 @@ library(corrplot)
 library(htmlwidgets)
 
 # Set file paths (modify as needed)
-data_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Data"
-figure_dir <- "C:/Users/User/OneDrive/Github Desktop/replication-code_misappropriating-vulnerability/Figure"
+data_dir <- "C:/Users/User/OneDrive/Github Desktop/Concentrated-Disadvantage-Index/Data"
+figure_dir <- "C:/Users/User/OneDrive/Github Desktop/Concentrated-Disadvantage-Index/Figure"
 
 # Create figure directory if it doesn't exist
 if (!dir.exists(figure_dir)) {

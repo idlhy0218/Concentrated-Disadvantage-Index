@@ -25,7 +25,7 @@ set more off
 estimates clear
 
 * File paths (modify as needed)
-local data_dir "C:\Users\User\OneDrive\Github Desktop\replication-code_misappropriating-vulnerability\Data"
+local data_dir "C:\Users\User\OneDrive\Github Desktop\Concentrated-Disadvantage-Index\Data"
 local tract_file  "`data_dir'\(created) finaldata_260508.csv"
 local county_file "`data_dir'\(created) finaldata county level_260508.csv"
 
