@@ -400,10 +400,9 @@ finaldata2 <- finaldata1 %>%
 # CDI VARIABLES: THREE VERSIONS
 #-------------------------------------------------------------------------------
 
-cdi_v1 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate")
-cdi_v2 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate", "pr_hs_or_low")
-cdi_v3 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate", "pr_hs_or_low", "pr_std_income")
-
+cdi_v1 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate")
+cdi_v2 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate", "pr_std_hs_or_low")
+cdi_v3 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate", "pr_std_hs_or_low", "pr_std_income") # pr_std_income is reverse-coded median income
 cdi_versions <- list(v1 = cdi_v1, v2 = cdi_v2, v3 = cdi_v3)
 
 #-------------------------------------------------------------------------------

@@ -7,9 +7,9 @@ library(psych)
 library(sf)
 
 # CDI versions
-cdi_v1 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate")
-cdi_v2 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate", "pr_hs_or_low")
-cdi_v3 <- c("pr_female_hh", "pr_pov", "pr_pubassi", "pr_unemprate", "pr_hs_or_low", "pr_std_income")
+cdi_v1 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate")
+cdi_v2 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate", "pr_std_hs_or_low")
+cdi_v3 <- c("pr_std_female_hh", "pr_std_pov", "pr_std_pubassi", "pr_std_unemprate", "pr_std_hs_or_low", "pr_std_income") # pr_std_income is reverse-coded median income
 cdi_versions <- list(v1 = cdi_v1, v2 = cdi_v2, v3 = cdi_v3)
 
 svi_t1_vars  <- c("e_pov150", "e_unemp", "e_hburd", "e_nohsdp", "e_uninsur")
@@ -41,8 +41,23 @@ county_cdi <- tract_finaldf %>%
     pr_pubassi    = mean(pr_pubassi,    na.rm = TRUE),
     pr_unemprate  = mean(pr_unemprate,  na.rm = TRUE),
     pr_hs_or_low  = mean(pr_hs_or_low,  na.rm = TRUE),
-    pr_std_income = mean(pr_std_income, na.rm = TRUE),
+    pr_std_income = mean(pr_std_income, na.rm = TRUE), # Income is reverse-coded: higher income = lower disadvantage
     .groups = "drop"
+  ) %>%
+  # Scale
+  mutate(
+    pr_std_hs_or_low  = (pr_hs_or_low - mean(pr_hs_or_low, na.rm = TRUE)) /
+      sd(pr_hs_or_low, na.rm = TRUE),
+    pr_std_female_hh  = (pr_female_hh - mean(pr_female_hh, na.rm = TRUE)) /
+      sd(pr_female_hh, na.rm = TRUE),
+    pr_std_pov        = (pr_pov - mean(pr_pov, na.rm = TRUE)) /
+      sd(pr_pov, na.rm = TRUE),
+    pr_std_pubassi    = (pr_pubassi - mean(pr_pubassi, na.rm = TRUE)) /
+      sd(pr_pubassi, na.rm = TRUE),
+    pr_std_unemprate  = (pr_unemprate - mean(pr_unemprate, na.rm = TRUE)) /
+      sd(pr_unemprate, na.rm = TRUE),
+    pr_std_income  = (pr_std_income - mean(pr_std_income, na.rm = TRUE)) /
+      sd(pr_std_income, na.rm = TRUE)  
   )
 
 county_df1 <- tract_finaldf %>%
