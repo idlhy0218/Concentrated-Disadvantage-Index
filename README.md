@@ -5,7 +5,7 @@
 [![R](https://img.shields.io/badge/R-%E2%89%A5_4.0-blue)](https://www.r-project.org/)
 [![Stata](https://img.shields.io/badge/Stata-16%2B-navy)](https://www.stata.com/)
 
-This repository provides ready-to-use, standardized **Concentrated Disadvantage Index (CDI)** datasets for all U.S. census tracts ($N = 84,208$) and counties ($N = 3,142$), along with complete replication materials for the manuscript *"Misappropriating Vulnerability: Assessing the Utility of the Social Vulnerability Index as a Predictor of Firearm Violence"* (Lee & Vogel, 2026).
+This repository provides ready-to-use, standardized **Concentrated Disadvantage Index (CDI)** datasets for all U.S. census tracts ($N = 84,208$) and counties ($N = 3,142$), along with complete replication materials for the manuscript *"Misappropriating Vulnerability: Assessing the Social Vulnerability Index as a Predictor of Firearm Violence"* (Vogel, Lee, Kaser, & Kim, *PLOS ONE*, Forthcoming).
 
 ---
 
@@ -42,7 +42,7 @@ This project serves a **twofold purpose**:
    Provides ready-to-use, standardized CDI measures constructed from U.S. Census Bureau American Community Survey (ACS 2020 5-year estimates) data across multiple geographic scales (National, State, County) and index formulations (V1, V2, V3).
    
 2. **Academic Manuscript Replication Package**  
-   Provides complete data processing scripts, merged datasets, and Stata modeling code for Lee & Vogel (2026). The study evaluates the conceptual foundations and empirical performance of the CDC Social Vulnerability Index (SVI) relative to the conventional Concentrated Disadvantage Index (CDI) in predicting neighborhood firearm homicides across 84 U.S. cities.
+   Provides complete data processing scripts, merged datasets, and Stata modeling code for Vogel, Lee, Kaser, and Kim (*PLOS ONE*, Forthcoming). The study evaluates the conceptual foundations and empirical performance of the CDC Social Vulnerability Index (SVI) relative to the conventional Concentrated Disadvantage Index (CDI) in predicting neighborhood firearm homicides across 84 U.S. cities.
 
 Unlike emergency-management indices such as the CDC SVI—which gauge general community capacity to absorb natural disaster shocks—the CDI specifically captures structural economic hardship, family structure, public assistance reliance, unemployment, education, and household income.
 
@@ -166,8 +166,9 @@ To reproduce all tables, figures, and empirical models from the manuscript (Tabl
 
 ## 📝 Recommended Citation
 
-If you use these datasets or code in your research, please cite:
+If you use these datasets or replication code in your research, please cite both the dataset release and the primary journal article:
 
+### 1. Dataset Citation
 > Lee, H. & Vogel, M. (2026). *Concentrated Disadvantage Index (CDI) Datasets*. Open Science Framework (OSF). https://doi.org/10.17605/OSF.IO/ZEJSW
 
 ```bibtex
@@ -178,6 +179,18 @@ If you use these datasets or code in your research, please cite:
   publisher    = {Open Science Framework (OSF)},
   doi          = {10.17605/OSF.IO/ZEJSW},
   url          = {https://doi.org/10.17605/OSF.IO/ZEJSW}
+}
+```
+
+### 2. Primary Journal Article Citation
+> Vogel, M., Lee, H., Kaser, T., & Kim, Y. (Forthcoming). Misappropriating Vulnerability: Assessing the Social Vulnerability Index as a Predictor of Firearm Violence. *PLOS ONE*.
+
+```bibtex
+@article{vogel_misappropriating_2026,
+  author       = {Vogel, Matt and Lee, Heeyoung and Kaser, Taylor and Kim, Yoobin},
+  title        = {Misappropriating Vulnerability: Assessing the Social Vulnerability Index as a Predictor of Firearm Violence},
+  journal      = {PLOS ONE},
+  year         = {Forthcoming}
 }
 ```
 
