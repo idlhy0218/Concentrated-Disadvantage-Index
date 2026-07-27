@@ -16,7 +16,7 @@ The primary release datasets are registered and archived on OSF:
 ## 📝 Recommended Citation
 If you use these datasets in your research, please cite:
 
-> Vogel, M. & Lee, H. (2026). *Concentrated Disadvantage Index (CDI) Datasets*. Open Science Framework (OSF). https://doi.org/10.17605/OSF.IO/ZEJSW
+> Lee, H. & Vogel, M. (2026). *Concentrated Disadvantage Index (CDI) Datasets*. Open Science Framework (OSF). https://doi.org/10.17605/OSF.IO/ZEJSW
 
 ---
 
