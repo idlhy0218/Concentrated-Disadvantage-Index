@@ -1,11 +1,52 @@
-# Claude Code
-.claude/
+# ==============================================================================
+# GITIGNORE FOR CONCENTRATED DISADVANTAGE INDEX REPOSITORY
+# ==============================================================================
 
-# R
+# Security Keys, Secrets & Environment Variables
+.Renviron
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.p12
+credentials.json
+secrets.json
+
+# R Runtime & Session Artifacts
 .Rhistory
 .RData
+.RDataTmp
 .Rproj.user/
+*.Rcheck/
 
-# OS
+# Python & Node Runtime Artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+node_modules/
+
+# OS & System Files
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+desktop.ini
+*.tmp
+*.log
+
+# Microsoft Office Temporary Lock Files
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# IDE & AI Assistant Workspace Caches
+.vscode/
+.idea/
+.claude/
+.gemini/
+
+# Figure Subfolders & HTML Widget Assets (e.g. Figure/interactive_map_260508_files/)
+Figure/*_files/
+Figure/*/

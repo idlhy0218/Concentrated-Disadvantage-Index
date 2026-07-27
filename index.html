@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Concentrated Disadvantage Index</title>
+  <title>Concentrated Disadvantage Index (CDI)</title>
+  <meta name="description" content="Nationwide Concentrated Disadvantage Index (CDI) datasets and replication code for the study Misappropriating Vulnerability." />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -59,7 +60,7 @@
     .nav-links a:hover { color: var(--ink); }
 
     /* SECTIONS */
-    section { max-width: 860px; margin: 0 auto; padding: 5rem 2rem; }
+    section { max-width: 880px; margin: 0 auto; padding: 5rem 2rem; }
     section + section { border-top: 1px solid var(--border); }
 
     /* HERO */
@@ -87,25 +88,10 @@
     .hero-sub {
       font-size: 1.05rem;
       color: var(--muted);
-      max-width: 580px;
-      margin-bottom: 2.5rem;
+      max-width: 620px;
+      margin-bottom: 2.2rem;
     }
-    .badge-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-    .badge {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      font-weight: 500;
-      padding: 0.3rem 0.7rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--muted);
-      background: white;
-    }
-    .badge.status {
-      background: var(--accent-light);
-      border-color: #e8b4b0;
-      color: var(--accent);
-    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
     /* SECTION HEADINGS */
     h2 {
@@ -121,15 +107,18 @@
     /* DATA CARDS */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
       margin-top: 2rem;
     }
     .card {
       background: white;
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 1.4rem 1.5rem;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .card-label {
       font-family: var(--mono);
@@ -141,26 +130,34 @@
       margin-bottom: 0.5rem;
     }
     .card-title {
-      font-size: 0.9rem;
+      font-size: 1.05rem;
       font-weight: 500;
       color: var(--ink);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
     }
     .card-desc {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--muted);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+    }
+    .btn-group {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
     }
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       font-family: var(--mono);
       font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.05em;
-      padding: 0.45rem 1rem;
+      letter-spacing: 0.04em;
+      padding: 0.55rem 1rem;
       border-radius: 2px;
       text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
       cursor: pointer;
       border: none;
     }
@@ -176,20 +173,48 @@
     }
     .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
 
-    /* CODEBOOK PLACEHOLDER */
-    .codebook-placeholder {
-      margin-top: 2rem;
+    /* CODEBOOK TABLE */
+    .table-container {
+      margin-top: 1.8rem;
       background: white;
-      border: 1px dashed var(--border);
+      border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 2.5rem;
-      text-align: center;
+      overflow-x: auto;
     }
-    .codebook-placeholder p {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      text-align: left;
+    }
+    th {
       font-family: var(--mono);
-      font-size: 0.78rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #f0ede8;
+      color: var(--ink);
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    .var-name {
+      font-family: var(--mono);
+      font-weight: 500;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .var-type {
+      font-family: var(--mono);
+      font-size: 0.72rem;
       color: var(--muted);
-      margin: 0;
     }
 
     /* REPLICATION */
@@ -281,7 +306,7 @@
   <a class="nav-brand" href="#">CDI</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#data">Data</a></li>
+    <li><a href="#data">Data Downloads</a></li>
     <li><a href="#codebook">Codebook</a></li>
     <li><a href="#replication">Replication</a></li>
     <li><a href="#citation">Citation</a></li>
@@ -290,128 +315,263 @@
 
 <!-- HERO -->
 <section id="hero">
-  <p class="eyebrow">Dataset Release</p>
+  <p class="eyebrow">Data Release & Paper Replication</p>
   <h1>Concentrated<br>Disadvantage Index</h1>
   <p class="hero-sub">
-    A tract- and county-level index of concentrated disadvantage constructed from CDC Social Vulnerability Index data, linked with police shooting incidents (2019–2023).
+    Nationwide census tract- and county-level Concentrated Disadvantage Index (CDI) datasets constructed from U.S. Census Bureau ACS data, accompanying the study <em>"Misappropriating Vulnerability."</em>
   </p>
-  <div class="badge-row">
-    <span class="badge status">Under Review</span>
-    <span class="badge">U.S. Census Tracts</span>
-    <span class="badge">2019–2023</span>
-    <span class="badge">R · Stata</span>
-    <a class="badge" href="https://github.com/idlhy0218/Concentrated-Disadvantage-Index" target="_blank" style="text-decoration:none; color: inherit;">GitHub ↗</a>
+
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#data">Download CDI Datasets ↓</a>
+    <a class="btn btn-ghost" href="#replication">View Replication Code ↗</a>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <h2>About</h2>
+  <h2>About This Project</h2>
   <p>
-    This repository provides the Concentrated Disadvantage Index (CDI), a composite measure of neighborhood-level socioeconomic vulnerability constructed for use in research on police violence and structural inequality.
+    This project serves a <strong>twofold purpose</strong>:
   </p>
-  <p>
-    The index is built from the CDC Social Vulnerability Index (SVI, 2020) at the census tract level, then aggregated to the county level for robustness checks. It is linked to police fatal shooting data (2019–2023) from the Washington Post database.
-  </p>
-  <p>
-    The dataset and replication materials accompany the paper <em>"Misappropriating Vulnerability"</em> (under review).
-  </p>
+  <div style="background: white; border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; margin-bottom: 1.5rem;">
+    <h3 style="font-family: var(--serif); font-weight: 400; font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--accent);">1. Primary Goal: Public Release of Nationwide CDI Datasets</h3>
+    <p style="margin-bottom: 0; font-size: 0.9rem;">
+      Providing ready-to-use, standardized Concentrated Disadvantage Index (CDI) data for all U.S. <strong>census tracts</strong> (N = 84,208) and <strong>counties</strong> (N = 3,142) constructed from U.S. Census Bureau American Community Survey (ACS 5-year estimates) data. The datasets include raw component proportions, standardized z-scores, and multi-version principal component (PCA) index scores (V1: 4-item baseline, V2: 5-item +education, V3: 6-item +income) scaled across <strong>National</strong>, <strong>State</strong>, and <strong>County</strong> levels for use in academic and policy research on neighborhood inequality, criminological theory, and public safety.
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; margin-bottom: 1.8rem;">
+    <h3 style="font-family: var(--serif); font-weight: 400; font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--ink);">2. Secondary Goal: Replication Materials for Paper Analysis</h3>
+    <p style="margin-bottom: 0.8rem; font-size: 0.9rem;">
+      Providing complete replication code, merged datasets, and statistical models for the manuscript <em>"Misappropriating Vulnerability: Assessing the Utility of the Social Vulnerability Index as a Predictor of Firearm Violence"</em> (Vogel et al., under review). The paper critically evaluates the conceptual foundations and empirical performance of the CDC Social Vulnerability Index (SVI) relative to the conventional CDI in predicting community firearm homicides across 84 U.S. cities.
+    </p>
+    <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 0.8rem;">
+      Unlike emergency-management indices such as the CDC SVI—which gauge general community capacity to absorb natural disaster shocks—the CDI specifically captures structural economic disadvantage, family structure, public assistance reliance, unemployment, education, and household income.
+    </p>
+  </div>
 </section>
 
 <!-- DATA -->
 <section id="data">
-  <h2>Data</h2>
-  <p>The following files are available for download from the repository.</p>
+  <h2>Data Downloads</h2>
+  <p>Download nationwide Concentrated Disadvantage Index (CDI) release datasets for census tracts and counties in CSV or RDS format.</p>
+
+  <!-- EMBEDDED INTERACTIVE MAP CONTAINER -->
+  <div style="margin-top: 1rem; margin-bottom: 2rem; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: white;">
+    <div style="padding: 0.75rem 1.2rem; background: #f0ede8; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 0.75rem; font-weight: 500; color: var(--ink); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+      <span style="font-family: var(--mono); font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Interactive County Map (CDI Score Range: -2 to +2)</span>
+      <a id="btn-fullscreen-map" href="Figure/interactive_map_county_cdi.html" target="_blank" style="color: var(--accent); text-decoration: none; font-size: 0.72rem; font-weight: 500;">Open Fullscreen ↗</a>
+    </div>
+    <iframe id="embedded-map-iframe" src="Figure/interactive_map_county_cdi.html" style="width: 100%; height: 550px; border: none;" title="Nationwide County CDI Interactive Map"></iframe>
+  </div>
 
   <div class="card-grid">
+    <!-- Card 1: Tract-Level Release Dataset -->
     <div class="card">
-      <p class="card-label">Created · Tract Level</p>
-      <p class="card-title">concentrated disadvantage items.RDS</p>
-      <p class="card-desc">CDI components at the census tract level. Generated by Script 1.</p>
-      <a class="btn btn-primary" href="https://github.com/idlhy0218/Concentrated-Disadvantage-Index/tree/main/Data" target="_blank">View on GitHub</a>
+      <div>
+        <p class="card-label">Created · Census Tract Level (Nationwide)</p>
+        <p class="card-title">Tract-Level CDI Release Dataset</p>
+        <p class="card-desc">Nationwide tract-level dataset (N = 84,208 census tracts) containing component items and composite CDI index scores (V1: 4-item baseline, V2: 5-item +education, V3: 6-item +income) scaled across National, State, and County levels. Generated by Script 5.</p>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-primary" href="Data/(created)%20cdi_tract_level_release.csv" download>Download CSV (34.3 MB)</a>
+        <a class="btn btn-ghost" href="Data/(created)%20cdi_tract_level_release.RDS" download>Download RDS (12.9 MB)</a>
+      </div>
     </div>
+
+    <!-- Card 2: County-Level Release Dataset -->
     <div class="card">
-      <p class="card-label">Created · Tract & County</p>
-      <p class="card-title">finaldata_*.RDS / .csv</p>
-      <p class="card-desc">Merged analysis files linking CDI to police shooting data. Generated by Script 2.</p>
-      <a class="btn btn-primary" href="https://github.com/idlhy0218/Concentrated-Disadvantage-Index/tree/main/Data" target="_blank">View on GitHub</a>
-    </div>
-    <div class="card">
-      <p class="card-label">Raw · Source Data</p>
-      <p class="card-title">SVI 2020 (Tract + County)</p>
-      <p class="card-desc">CDC Social Vulnerability Index, 2020. Do not modify. Includes official SVI codebook PDF.</p>
-      <a class="btn btn-ghost" href="https://www.atsdr.cdc.gov/placeandhealth/svi/index.html" target="_blank">CDC Source ↗</a>
+      <div>
+        <p class="card-label">Created · County Level (Nationwide)</p>
+        <p class="card-title">County-Level CDI Release Dataset</p>
+        <p class="card-desc">Nationwide county-level dataset (N = 3,142 counties) containing aggregated component items and composite CDI index scores (V1, V2, V3) scaled across National and State levels. Generated by Script 6.</p>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-primary" href="Data/(created)%20cdi_county_level_release.csv" download>Download CSV (1.08 MB)</a>
+        <a class="btn btn-ghost" href="Data/(created)%20cdi_county_level_release.RDS" download>Download RDS (438 KB)</a>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- CODEBOOK -->
 <section id="codebook">
-  <h2>Codebook</h2>
-  <p>Variable documentation for the CDI output files. Full codebook forthcoming.</p>
-  <div class="codebook-placeholder">
-    <p>⌛ &nbsp; Codebook under construction — check back soon.</p>
+  <h2>Variable Codebook</h2>
+  <p>Key variables included in the primary tract-level and county-level release files (<code>(created) cdi_tract_level_release.csv/.RDS</code> and <code>(created) cdi_county_level_release.csv/.RDS</code>).</p>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Variable Name</th>
+          <th>Type</th>
+          <th>Description & Construct</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="var-name">tract_fips / county_fips</td>
+          <td class="var-type">Numeric / String</td>
+          <td>11-digit Census Tract FIPS code or 5-digit County FIPS code uniquely identifying geography.</td>
+        </tr>
+        <tr>
+          <td class="var-name">state_fips</td>
+          <td class="var-type">String</td>
+          <td>2-digit State FIPS code.</td>
+        </tr>
+        <tr>
+          <td class="var-name">disad_national_v1 / v2 / v3</td>
+          <td class="var-type">Numeric</td>
+          <td><strong>CDI (National Level)</strong>: PCA score standardized across all U.S. tracts/counties (V1 = 4-item baseline, V2 = 5-item +education, V3 = 6-item +income).</td>
+        </tr>
+        <tr>
+          <td class="var-name">disad_state_v1 / v2 / v3</td>
+          <td class="var-type">Numeric</td>
+          <td><strong>CDI (State Level)</strong>: PCA score standardized within each state.</td>
+        </tr>
+        <tr>
+          <td class="var-name">disad_county_v1 / v2 / v3</td>
+          <td class="var-type">Numeric</td>
+          <td><strong>CDI (County Level - Tract dataset)</strong>: PCA score standardized within each county.</td>
+        </tr>
+        <tr>
+          <td class="var-name">pr_female_hh</td>
+          <td class="var-type">Numeric</td>
+          <td>Proportion of female-headed households with no spouse present (ACS B11001).</td>
+        </tr>
+        <tr>
+          <td class="var-name">pr_pov</td>
+          <td class="var-type">Numeric</td>
+          <td>Proportion of population living below 100% poverty threshold (ACS C17002).</td>
+        </tr>
+        <tr>
+          <td class="var-name">pr_pubassi</td>
+          <td class="var-type">Numeric</td>
+          <td>Proportion of households receiving public assistance income (ACS B19057).</td>
+        </tr>
+        <tr>
+          <td class="var-name">pr_unemprate</td>
+          <td class="var-type">Numeric</td>
+          <td>Civilian unemployment rate for population age 16+ (ACS B23001/B23025).</td>
+        </tr>
+        <tr>
+          <td class="var-name">pr_hs_or_low</td>
+          <td class="var-type">Numeric</td>
+          <td>Proportion of population age 25+ with high school education or lower (ACS B06009).</td>
+        </tr>
+        <tr>
+          <td class="var-name">median_income</td>
+          <td class="var-type">Numeric</td>
+          <td>Median household income in past 12 months (ACS B19013).</td>
+        </tr>
+        <tr>
+          <td class="var-name">pr_std_*</td>
+          <td class="var-type">Numeric</td>
+          <td>Standardized z-scores for each component item (income is reverse-coded).</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
 <!-- REPLICATION -->
 <section id="replication">
-  <h2>Replication</h2>
-  <p>Run scripts in the following order to reproduce all results and figures.</p>
+  <h2>Replication Code & CDI Scripts</h2>
+  <p>
+    This project provides code both for nationwide CDI dataset construction and for reproducing the original paper analysis. The complete replication package containing all scripts, raw data, and documentation can be downloaded directly or accessed on GitHub.
+  </p>
+
+  <div class="btn-group" style="margin-bottom: 1.5rem;">
+    <a class="btn btn-primary" href="https://github.com/idlhy0218/Concentrated-Disadvantage-Index/archive/refs/heads/main.zip" download>Download Full Replication Package (.ZIP)</a>
+    <a class="btn btn-ghost" href="https://github.com/idlhy0218/Concentrated-Disadvantage-Index" target="_blank">View GitHub Repository ↗</a>
+  </div>
+  <p>
+    <strong>Replicating Full Paper Analysis:</strong> To reproduce all regression models, summary statistics, and figures in the original manuscript (Tables 1–3, Appendices 2–4, Figures 1–2), run Scripts <code>01</code> through <code>04</code> followed by the Stata do-file <code>analysis_260509.do</code>.
+  </p>
+  <p>
+    <strong>Replicating Nationwide CDI Dataset Creation:</strong> If your primary goal is to construct or replicate the nationwide Concentrated Disadvantage Index (CDI) datasets directly from raw ACS Census data, see:
+  </p>
+  <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--muted); font-size: 0.88rem;">
+    <li><code>Script 01</code> — Pulls ACS Census variables and builds tract component items.</li>
+    <li><code>Script 05</code> — Constructs the nationwide tract-level CDI release dataset (National, State, and County scaled V1, V2, V3).</li>
+    <li><code>Script 06</code> — Extracts county-level ACS Census variables directly (like Script 01) and constructs the nationwide county-level CDI release dataset (National and State scaled V1, V2, V3).</li>
+  </ul>
 
   <div class="script-list">
     <div class="script-item">
       <span class="script-num">01</span>
       <div>
-        <p class="script-name">1_tract level concentrated disadvantage items.R</p>
-        <p class="script-desc">Constructs the CDI from SVI tract-level data. Outputs <code>concentrated disadvantage items.RDS</code>.</p>
+        <p class="script-name">1_tract level concentrated disadvantage items_260510.R</p>
+        <p class="script-desc">Constructs CDI components from Census ACS 5-year estimates. Outputs <code>(created) concentrated disadvantage items.RDS</code>.</p>
       </div>
     </div>
     <div class="script-item">
       <span class="script-num">02</span>
       <div>
-        <p class="script-name">2_American Violence data cleaning.R</p>
-        <p class="script-desc">Cleans and merges police shooting data with CDI. Outputs <code>finaldata_*.RDS/.csv</code>.</p>
+        <p class="script-name">2_American Violence data cleaning_260508.R</p>
+        <p class="script-desc">Cleans and merges American Violence Project firearm homicide data with CDC SVI and CDI; computes PCA scores (National, State, City). Outputs <code>(created) finaldata_260508.RDS/.csv</code>.</p>
       </div>
     </div>
     <div class="script-item">
       <span class="script-num">03</span>
       <div>
-        <p class="script-name">3_Other Figures.R</p>
-        <p class="script-desc">Generates all paper figures. Outputs to <code>Figure/</code>.</p>
+        <p class="script-name">3_Other Figures_260508.R</p>
+        <p class="script-desc">Generates paper correlation plots (sub-items & composite) and interactive Leaflet map in <code>Figure/</code>.</p>
       </div>
     </div>
     <div class="script-item">
       <span class="script-num">04</span>
       <div>
         <p class="script-name">4_county level robustness check.R</p>
-        <p class="script-desc">County-level robustness analysis (supplemental). Stata version also available.</p>
+        <p class="script-desc">Aggregates CDI & SVI to county level and performs PCA for robustness checks. Outputs <code>(created) finaldata county level_260508.RDS/.csv</code>.</p>
+      </div>
+    </div>
+    <div class="script-item">
+      <span class="script-num">05</span>
+      <div>
+        <p class="script-name">5_tract level cdi for release.R</p>
+        <p class="script-desc">Generates nationwide tract-level release files with V1, V2, V3 scores scaled across County, State, and National levels. Outputs <code>(created) cdi_tract_level_release.RDS/.csv</code>.</p>
+      </div>
+    </div>
+    <div class="script-item">
+      <span class="script-num">06</span>
+      <div>
+        <p class="script-name">6_county level cdi for release.R</p>
+        <p class="script-desc">Extracts county-level ACS indicators directly via tidycensus (like Script 1) and generates nationwide county-level release files with V1, V2, V3 scores scaled across State and National levels. Outputs <code>(created) cdi_county_level_release.RDS/.csv</code>.</p>
+      </div>
+    </div>
+    <div class="script-item">
+      <span class="script-num">07</span>
+      <div>
+        <p class="script-name">analysis_260509.do (Stata)</p>
+        <p class="script-desc">Executes primary statistical modeling: OLS, Negative Binomial, Poisson, Standardized IRRs, Leverage diagnostics, V1–V3 comparisons, and County robustness.</p>
       </div>
     </div>
   </div>
 
   <div class="software-row">
     <span class="badge">R ≥ 4.0</span>
-    <span class="badge">Stata 17+</span>
+    <span class="badge">Stata 16+</span>
     <span class="badge">tidyverse</span>
     <span class="badge">sf</span>
-    <span class="badge">haven</span>
+    <span class="badge">psych</span>
+    <span class="badge">corrplot</span>
+    <span class="badge">leaflet</span>
   </div>
 </section>
 
 <!-- CITATION -->
 <section id="citation">
   <h2>Citation</h2>
-  <p>If you use this dataset, please cite the associated paper (forthcoming):</p>
+  <p>If you use this dataset or replication code in your research, please cite:</p>
   <div class="citation-block">
     <div class="citation-header">BibTeX</div>
-    <div class="citation-body">@article{lee_forthcoming,
-  author  = {Lee, Heeyoung},
-  title   = {Misappropriating Vulnerability},
-  journal = {[Journal TBD]},
-  year    = {forthcoming},
-  note    = {Replication data available at
-             https://github.com/idlhy0218/Concentrated-Disadvantage-Index}
+    <div class="citation-body">@article{vogel_lee_forthcoming,
+  author  = {Vogel, Matt and Lee, Heeyoung and Kaser, Taylor and Kim, Yoobin},
+  title   = {Misappropriating Vulnerability: Assessing the Utility of the Social Vulnerability Index as a Predictor of Firearm Violence},
+  journal = {Under Review},
+  year    = {2026},
+  note    = {Replication data available at https://github.com/idlhy0218/Concentrated-Disadvantage-Index}
 }</div>
   </div>
 </section>
@@ -420,9 +580,9 @@
 <footer>
   <a href="https://github.com/idlhy0218/Concentrated-Disadvantage-Index" target="_blank">GitHub Repository</a>
   &nbsp;·&nbsp;
-  Heeyoung Lee
+  Matt Vogel & Heeyoung Lee
   &nbsp;·&nbsp;
-  Data released for academic use
+  Replication data released for academic use
 </footer>
 
 </body>
