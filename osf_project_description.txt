@@ -2,7 +2,7 @@
 OSF PROJECT DESCRIPTION: NATIONWIDE CONCENTRATED DISADVANTAGE INDEX (CDI) DATASETS
 ===============================================================================
 Project Title: Concentrated Disadvantage Index (CDI) Datasets
-Authors      : Matt Vogel & Hojoon Lee (2026)
+Authors      : Heeyoung Lee & Matt Vogel (2026)
 DOI          : https://doi.org/10.17605/OSF.IO/ZEJSW
 Repository   : https://github.com/idlhy0218/Concentrated-Disadvantage-Index
 ===============================================================================
@@ -40,7 +40,7 @@ REPOSITORY STRUCTURE:
 -------------------------------------------------------------------------------
 RECOMMENDED CITATION:
 -------------------------------------------------------------------------------
-Vogel, M. & Lee, H. (2026). Concentrated Disadvantage Index (CDI) Datasets. Open Science Framework (OSF). https://doi.org/10.17605/OSF.IO/ZEJSW
+Lee, H. & Vogel, M. (2026). Concentrated Disadvantage Index (CDI) Datasets. Open Science Framework (OSF). https://doi.org/10.17605/OSF.IO/ZEJSW
 
 ===============================================================================
 END OF OSF PROJECT DESCRIPTION
