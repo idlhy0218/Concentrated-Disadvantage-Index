@@ -1,0 +1,47 @@
+===============================================================================
+OSF PROJECT DESCRIPTION: NATIONWIDE CONCENTRATED DISADVANTAGE INDEX (CDI) DATASETS
+===============================================================================
+Project Title: Concentrated Disadvantage Index (CDI) Datasets
+Authors      : Matt Vogel & Hojoon Lee (2026)
+DOI          : https://doi.org/10.17605/OSF.IO/ZEJSW
+Repository   : https://github.com/idlhy0218/Concentrated-Disadvantage-Index
+===============================================================================
+
+[PROJECT OVERVIEW / ABSTRACT FOR OSF]
+-------------------------------------------------------------------------------
+Concentrated disadvantage is a fundamental construct in criminology, urban sociology, and public health, measuring spatial concentrations of structural economic hardship and social vulnerability. Unlike emergency-management indices such as the CDC Social Vulnerability Index (SVI)—which gauge general community capacity to absorb natural disaster shocks—the CDI specifically captures structural economic disadvantage, family structure, public assistance reliance, unemployment, education, and household income.
+
+This repository provides ready-to-use, standardized Concentrated Disadvantage Index (CDI) datasets for all U.S. census tracts (N = 84,208) and counties (N = 3,142) constructed from U.S. Census Bureau American Community Survey (ACS 2020 5-year estimates) data, complete data extraction scripts, interactive spatial maps, and plain-text codebooks.
+
+-------------------------------------------------------------------------------
+DATASET CONTENT & GEOGRAPHIC COVERAGE:
+-------------------------------------------------------------------------------
+1. Tract-Level Release Dataset (cdi_tract_level_release.csv / .RDS):
+   - Coverage: N = 84,208 U.S. census tracts across all 50 states.
+   - Contains raw component proportions, standardized z-scores, and PCA composite index scores.
+   - CDI Versions:
+     * V1 Baseline (4 Items): Female-headed households, Poverty rate, Public assistance reliance, Civilian unemployment rate.
+     * V2 (5 Items): Baseline items + Population 25+ with high school education or lower.
+     * V3 (6 Items): V2 items + Reverse-coded median household income.
+   - Geographic Scales: Index scores computed across National, State, and County benchmark levels.
+
+2. County-Level Release Dataset (cdi_county_level_release.csv / .RDS):
+   - Coverage: N = 3,142 U.S. counties and county-equivalents across all 50 states.
+   - Contains aggregated ACS component items, standardized z-scores, and PCA composite index scores scaled across National and State benchmark levels.
+
+-------------------------------------------------------------------------------
+REPOSITORY STRUCTURE:
+-------------------------------------------------------------------------------
+- R Code/: R scripts for Census ACS data extraction (via tidycensus), dataset building, PCA factor analysis, correlation plotting, and interactive mapping.
+- STATA Code/: Stata do-files executing statistical models and diagnostic robustness tests.
+- Data/: Complete raw ACS components, final release CSV/RDS files, and plain-text variable codebooks (codebook_cdi_tract_level_release.txt, codebook_cdi_county_level_release.txt).
+- Figure/: Interactive MapLibre GL spatial map (interactive_map_county_cdi.html), scree plots, and correlation matrices.
+
+-------------------------------------------------------------------------------
+RECOMMENDED CITATION:
+-------------------------------------------------------------------------------
+Vogel, M. & Lee, H. (2026). Concentrated Disadvantage Index (CDI) Datasets. Open Science Framework (OSF). https://doi.org/10.17605/OSF.IO/ZEJSW
+
+===============================================================================
+END OF OSF PROJECT DESCRIPTION
+===============================================================================

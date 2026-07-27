@@ -1,0 +1,71 @@
+===============================================================================
+CODEBOOK: NATIONWIDE CENSUS TRACT-LEVEL CONCENTRATED DISADVANTAGE INDEX (CDI)
+===============================================================================
+Target Files : (created) cdi_tract_level_release.csv
+               (created) cdi_tract_level_release.RDS
+Geographic   : U.S. Census Tracts (N = 84,208)
+Data Source  : U.S. Census Bureau American Community Survey (ACS 2020 5-Year Estimates)
+Recommended Citation:
+Vogel, M. & Lee, H. (2026). Concentrated Disadvantage Index (CDI) Datasets. Open Science Framework (OSF). https://doi.org/10.17605/OSF.IO/ZEJSW
+===============================================================================
+
+1. GEOGRAPHIC & IDENTIFIER VARIABLES
+-------------------------------------------------------------------------------
+tract_fips       : Numeric 11-digit Census Tract FIPS code.
+fips_str         : String 11-digit zero-padded Census Tract FIPS code (e.g., "01001020100").
+state_fips       : String 2-digit State FIPS code (e.g., "01" for Alabama).
+county_fips      : String 5-digit County FIPS code (e.g., "01001" for Autauga County, AL).
+year             : Numeric 4-digit ACS 5-year estimate period end year (2020).
+
+2. RAW ACS COMPONENT PROPORTIONS & VALUES
+-------------------------------------------------------------------------------
+pr_female_hh     : Proportion of female-headed households with children and no spouse present.
+                   Constructed from ACS Table B11001 (B11001_006 / B11001_001).
+pr_pov           : Proportion of population living below 100% of the federal poverty level.
+                   Constructed from ACS Table C17002 ((n1 + n2) / total population).
+pr_pubassi       : Proportion of households receiving public assistance income.
+                   Constructed from ACS Table B19057 (B19057_002 / B19057_001).
+pr_unemprate     : Proportion of the civilian labor force currently unemployed.
+                   Constructed from ACS Table B23025 (B23025_005 / B23025_001).
+pr_hs_or_low     : Proportion of the population aged 25+ with high school education or lower.
+                   Constructed from ACS Table B06009 ((po_educ_lh + po_educ_hc) / total 25+).
+median_income    : Median household income in inflation-adjusted U.S. dollars.
+                   Source: ACS Table B19013 (B19013_001).
+
+3. STANDARDIZED Z-SCORES (MEAN = 0, SD = 1)
+-------------------------------------------------------------------------------
+pr_std_female_hh : Standardized z-score of female-headed households proportion.
+pr_std_pov       : Standardized z-score of federal poverty rate.
+pr_std_pubassi   : Standardized z-score of public assistance income rate.
+pr_std_unemprate : Standardized z-score of civilian unemployment rate.
+pr_std_hs_or_low : Standardized z-score of population with high school education or lower.
+pr_std_income    : Reverse-coded standardized z-score of median household income.
+                   Formula: -(income - mean) / sd. Higher values represent lower income 
+                   (greater economic disadvantage).
+
+4. CONCENTRATED DISADVANTAGE INDEX (CDI) COMPOSITE PCA SCORES
+-------------------------------------------------------------------------------
+All CDI scores are generated via single-factor Principal Component Analysis (PCA)
+with unrotated factor extraction.
+
+A. NATIONAL LEVEL SCALING (Standardized across all U.S. Census Tracts):
+disad_national_v1: CDI V1 Baseline (4-Item Index: female_hh, pov, pubassi, unemprate).
+                   Traditional criminological baseline index (Sampson et al., 1997).
+disad_national_v2: CDI V2 (5-Item Index: female_hh, pov, pubassi, unemprate, hs_or_low).
+                   Baseline plus education construct.
+disad_national_v3: CDI V3 (6-Item Index: female_hh, pov, pubassi, unemprate, hs_or_low, income).
+                   Expanded index incorporating reverse-coded median income.
+
+B. STATE LEVEL SCALING (Standardized within each State):
+disad_state_v1   : CDI V1 Baseline (4-Item Index) standardized within state.
+disad_state_v2   : CDI V2 (5-Item Index) standardized within state.
+disad_state_v3   : CDI V3 (6-Item Index) standardized within state.
+
+C. COUNTY LEVEL SCALING (Standardized within each County):
+disad_county_v1  : CDI V1 Baseline (4-Item Index) standardized within county.
+disad_county_v2  : CDI V2 (5-Item Index) standardized within county.
+disad_county_v3  : CDI V3 (6-Item Index) standardized within county.
+
+===============================================================================
+END OF CODEBOOK
+===============================================================================
