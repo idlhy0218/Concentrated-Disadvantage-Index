@@ -72,13 +72,13 @@ scalar drop n_top_svi
 *-------------------------------------------------------------------------------
 
 * Variable lists
-global svi_all  e_pov150 e_unemp e_hburd e_nohsdp e_uninsur ///
-                e_age65 e_age17 e_disabl e_sngpnt e_limeng ///
-                e_minrty ///
-                e_munit e_mobile e_crowd e_noveh e_groupq
-global svi_t1   e_pov150 e_unemp e_hburd e_nohsdp e_uninsur
-global svi_t2   e_age65 e_age17 e_disabl e_sngpnt e_limeng
-global svi_t4   e_munit e_mobile e_crowd e_noveh e_groupq
+global svi_all  ep_pov150 ep_unemp ep_hburd ep_nohsdp ep_uninsur ///
+                ep_age65 ep_age17 ep_disabl ep_sngpnt ep_limeng ///
+                ep_minrty ///
+                ep_munit ep_mobile ep_crowd ep_noveh ep_groupq
+global svi_t1   ep_pov150 ep_unemp ep_hburd ep_nohsdp ep_uninsur
+global svi_t2   ep_age65 ep_age17 ep_disabl ep_sngpnt ep_limeng
+global svi_t4   ep_munit ep_mobile ep_crowd ep_noveh ep_groupq
 global cdi_vars pr_female_hh pr_pov pr_pubassi pr_unemprate
 
 * SVI alphas
